@@ -273,3 +273,22 @@ Deliverables built with this skill are published publicly: run the checker
 from the **orion-script-deployment-testing** skill
 (`scripts/check-public-safe.sh`) before anything leaves the machine, and
 keep all examples on `example.com` / documentation-range addressing.
+
+## Data handling for shareable outputs (DLP by minimization)
+
+When this skill produces artifacts that may leave their original environment
+(reports, examples, documentation, published recipes): **minimize sensitive
+content by substitution rather than withholding the artifact.** DLP filtering
+should not win out over building a useful, shareable workflow.
+
+- Substitute identifiers with bracketed placeholders: **[InternalOrg]** for
+  the organization, **[OpCo-A]**/**[Site-A]** for business units and
+  locations, **[host-1]**/**[scanner-1]** for systems, and generalized or
+  RFC 5737 example addresses for real ranges.
+- Name lessons and sections by their **content**, never by internal site or
+  host names ("witness-blind user subnet", not "the [Site] lesson").
+- After substitution, run a **leak-check sweep** (grep the org's names, sites,
+  hostnames, domains, address prefixes) against the final text before
+  publishing. Substitution without verification is a guess.
+- Keep a full-fidelity twin locally (e.g., `NOTES-local.md`, gitignored) when
+  the real identifiers matter operationally.
